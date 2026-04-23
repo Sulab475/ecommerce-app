@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spider Clock Pro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="clock">
+  <svg viewBox="0 0 400 400">
+
+    <!-- Glow Filter -->
+    <defs>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <!-- Outer Circle -->
+    <circle cx="200" cy="200" r="170" class="circle"/>
+
+    <!-- Numbers -->
+    <g id="numbers"></g>
+
+    <!-- Gears -->
+    <g class="gear gear1"></g>
+    <g class="gear gear2"></g>
+    <g class="gear gear3"></g>
+
+    <!-- Hands -->
+    <line id="hour" x1="200" y1="200" x2="200" y2="130"/>
+    <line id="minute" x1="200" y1="200" x2="200" y2="100"/>
+    <line id="second" x1="200" y1="200" x2="200" y2="80"/>
+
+    <!-- Spider -->
+    <g id="spider"></g>
+
+  </svg>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
