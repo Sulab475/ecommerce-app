@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
+</head>
+<body>
+  <main style="display: contents;">
+  <div class="dashboard">
+    <!-- Top navigation controls section switching and mobile menu. -->
+    <header class="navbar">
+      <div class="logo">
+        <h1>🎓 Academy</h1>
+        <p>Student Dashboard</p>
+      </div>
+
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-links" id="primary-navigation">
+        <a href="#overview" class="active">Overview</a>
+        <a href="#attendance">Attendance</a>
+        <a href="#payments">Fees</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#events">Notices</a>
+        <a href="#profile">Profile</a>
+        <form action="{% url 'students:logout' %}" method="post" class="nav-logout-form">
+          {% csrf_token %}
+          <button type="submit" class="nav-logout-btn">Logout</button>
+        </form>
+      </nav>
+    </header>
+
+    <!-- Only one section is visible at a time via script.js. -->
+    <div class="main">
+      <section class="page-section" id="overview">
+        <div class="topbar">
+          <div>
+            <h2>Welcome back, {{ display_name }}</h2>
+            <p>
+              {% if profile %}
+                {{ profile.get_course_display }}, Semester {{ profile.semester }}
+              {% else %}
+                Student account
+              {% endif %}
+            </p>
+          </div>
+          <div class="student-chip">
+            {% if profile %}
+              Roll {{ profile.roll_no }} · {{ profile.student_id }}
+            {% else %}
+              Student Profile
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="hero-grid">
+          <div class="hero-card primary-card">
+            <div class="hero-card-head">
+              <div>
+                <p class="eyebrow">Student Summary</p>
+                <h3>Academic Snapshot</h3>
+              </div>
+              <div class="avatar">
+                {% if profile and profile.profile_photo %}
+                  <img src="{{ profile.profile_photo.url }}" alt="{{ display_name }} profile photo" class="avatar-image">
+                {% else %}
+                  {{ avatar_text }}
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="metric-grid">
+              <div class="metric">
+                <span>Attendance</span>
+                <strong>{{ attendance_overall_percentage }}%</strong>
+                <small>Calculated from recorded attendance</small>
+              </div>
+              <div class="metric">
+                <span>CGPA</span>
+                <strong>{% if profile and profile.overall_gpa is not None %}{{ profile.overall_gpa }}{% else %}-{% endif %}</strong>
+                <small>Updated by faculty or admin</small>
+              </div>
+              <div class="metric">
+                <span>Fees Due</span>
+                <strong>₹30,000</strong>
+                <small>Due by 20 April</small>
+              </div>
+              <div class="metric">
+                <span>Classes Today</span>
+                <strong>5</strong>
+                <small>2 labs, 3 theory</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-card notice-card">
+            <p class="eyebrow">Campus Notices</p>
+            <h3>Important Updates</h3>
+
+            <div class="notice-list">
+              {% for event in calendar_upcoming_dates %}
+              <div class="notice-item">
+                <span class="badge {% if event.event_type == 'Exam' %}green{% elif event.event_type == 'Notice' %}blue{% elif event.event_type == 'Holiday' %}pink{% else %}yellow{% endif %}">{{ event.event_type }}</span>
+                <div>
+                  <strong>{{ event.title }}</strong>
+                  <p>{{ event.event_date|date:'j M Y' }}</p>
+                </div>
+              </div>
+              {% empty %}
+              <div class="notice-item">
+                <span class="badge blue">Info</span>
+                <div>
+                  <strong>No notice available</strong>
+                  <p>Upcoming public updates will appear here.</p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <p>Attendance Risk</p>
+            <h3>Low</h3>
+            <small>All required subjects are above 85%</small>
+          </div>
+
+          <div class="card">
+            <p>Internal Marks</p>
+            <h3>78%</h3>
+            <small>Strong performance in core subjects</small>
+          </div>
+
+          <div class="card">
+            <p>Library Dues</p>
+            <h3>None</h3>
+            <small>No pending books or fines</small>
+          </div>
+
+          <div class="card">
+            <p>Course Load</p>
+            <h3>5</h3>
+            <small>Subjects this semester</small>
+          </div>
+        </div>
+
+        <div class="section-box">
+          <h3>Today's Schedule</h3>
+          <p class="sub">Room-wise classes for 2 April 2026</p>
+
+          <div class="schedule-item">
+            <div class="time">10:00 - 12:00</div>
+            <div class="title">Object Oriented Programming - JAVA</div>
+            <div class="teacher">Room 208 · Mr Debasish Hati</div>
+          </div>
+
+          <div class="schedule-item">
+            <div class="time">12:00 - 01:00</div>
+            <div class="title">OOP Lab using JAVA</div>
+            <div class="teacher">Lab 1 · Mr Jaydeep Goswami & Mr Debasish Hati</div>
+          </div>
+
+          <div class="schedule-item">
+            <div class="time">01:40 - 02:40</div>
+            <div class="title">Computer Networks Lab</div>
+            <div class="teacher">Lab 2 · Mr Partha Halder & Mrs Suparna Ghosh</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" id="attendance">
+        <div class="topbar">
+          <div>
+            <h2>Attendance Record</h2>
+            <p>Month-wise attendance details based on saved records</p>
+          </div>
+          <form method="get" style="display: flex; gap: 8px; align-items: center;">
+            <input type="month" name="month" value="{{ selected_month }}">
+            <button class="btn" type="submit">Load Month</button>
+          </form>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <p>Overall Attendance</p>
+            <h3>{{ attendance_overall_percentage }}%</h3>
+            <small>All-time average from attendance register</small>
+          </div>
+          <div class="card">
+            <p>Classes Attended</p>
+            <h3>{{ attendance_present_classes }}</h3>
+            <small>Out of {{ attendance_total_classes }} recorded classes</small>
+          </div>
+          <div class="card">
+            <p>{{ selected_month_label }}</p>
+            <h3>{{ monthly_overall_percentage }}%</h3>
+            <small>{{ monthly_present_classes }} present, {{ monthly_absent_classes }} absent</small>
+          </div>
+          <div class="card">
+            <p>Minimum Required</p>
+            <h3>75%</h3>
+            <small>Institute attendance policy</small>
+          </div>
+        </div>
+
+        <div class="section-box table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Classes Held</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Attendance %</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for month_row in attendance_monthly_rows %}
+              <tr>
+                <td>{{ month_row.month_label }}</td>
+                <td>{{ month_row.total }}</td>
+                <td>{{ month_row.present }}</td>
+                <td>{{ month_row.absent }}</td>
+                <td>{{ month_row.percentage }}%</td>
+                <td>
+                  {% if month_row.percentage >= 75 %}
+                  <span class="badge green">Good</span>
+                  {% else %}
+                  <span class="badge yellow">Needs Focus</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="7">No attendance records available yet.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Fees are shown semester-wise for clarity and tracking. -->
+      <section class="page-section" id="payments">
+        <div class="topbar">
+          <div>
+            <h2>Semester-wise Fees</h2>
+            <p>Admin-controlled fee structure, payment status, and receipts</p>
+          </div>
+          <button class="btn pink" onclick="showMessage('Payments')">View Fees</button>
+        </div>
+
+        <div class="fee-overview">
+          <div class="fee-summary-card">
+            <p class="eyebrow">Current Semester</p>
+            <h3>{% if fee_current_structure %}Semester {{ fee_current_structure.semester }}{% else %}Not Assigned{% endif %}</h3>
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <span>Semester Fee</span>
+                <strong>{% if fee_current_structure %}₹{{ fee_current_structure.total_fee|floatformat:0 }}{% else %}₹0{% endif %}</strong>
+              </div>
+              <div class="profile-stat">
+                <span>Due Date</span>
+                <strong>{% if fee_current_structure %}{{ fee_current_structure.due_date|date:'d M Y' }}{% else %}-{% endif %}</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="fee-summary-card">
+            <p class="eyebrow">Payment Status</p>
+            <h3>₹{{ fee_summary.paid_total|floatformat:0 }} Paid</h3>
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <span>Pending Balance</span>
+                <strong>₹{{ fee_summary.pending_balance|floatformat:0 }}</strong>
+              </div>
+              <div class="profile-stat">
+                <span>Clearance</span>
+                <strong>{{ fee_summary.clearance_percentage }}%</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="fee-summary-card">
+            <p class="eyebrow">Fee Structure</p>
+            <h3>Annual Total: ₹{{ fee_summary.annual_total|floatformat:0 }}</h3>
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <span>Receipts Recorded</span>
+                <strong>{{ fee_receipts|length }}</strong>
+              </div>
+              <div class="profile-stat">
+                <span>Mode</span>
+                <strong>{% if fee_recent_payment %}{{ fee_recent_payment.payment_mode }}{% else %}-{% endif %}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-box">
+          <h3>Semester Fee Breakdown</h3>
+          <p class="sub">Fees are controlled from admin and tracked semester-wise for your course</p>
+          <div class="notice-list compact">
+            <div class="notice-item">
+              <span class="badge green">Current</span>
+              <div>
+                <strong>{{ fee_summary.current_due_message }}</strong>
+                <p>{% if fee_current_structure %}Payable before {{ fee_current_structure.due_date|date:'d M Y' }}{% else %}Admin has not added a fee structure yet.{% endif %}</p>
+              </div>
+            </div>
+            <div class="notice-item">
+              <span class="badge blue">Info</span>
+              <div>
+                <strong>{{ fee_summary.paid_semesters }} of {{ fee_summary.total_semesters }} fee records cleared</strong>
+                <p>Receipt history and semester balances are computed from saved payments.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-box table-wrap">
+          <h3>Semester Fee Table</h3>
+          <p class="sub">Academic year and semester fees managed from admin</p>
+          <table>
+            <thead class="semester-table">
+              <tr>
+                <th>Semester</th>
+                <th>Academic Year</th>
+                <th>Total Fee</th>
+                <th>Paid</th>
+                <th>Pending</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for fee_row in fee_payment_rows %}
+              <tr>
+                <td>Semester {{ fee_row.structure.semester }}</td>
+                <td>{{ fee_row.structure.academic_year }}</td>
+                <td>₹{{ fee_row.structure.total_fee|floatformat:0 }}</td>
+                <td>₹{{ fee_row.paid_total|floatformat:0 }}</td>
+                <td>₹{{ fee_row.pending_total|floatformat:0 }}</td>
+                <td>
+                  {% if fee_row.status_label == 'Cleared' %}
+                  <span class="status-pill paid">Cleared</span>
+                  {% elif fee_row.status_label == 'Partial' %}
+                  <span class="status-pill partial">Partial</span>
+                  {% else %}
+                  <span class="status-pill pending">Due</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6">No fee structure is available for your course.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-box table-wrap">
+          <h3>Receipt History</h3>
+          <p class="sub">Recent payment entries stored by admin</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Receipt No.</th>
+                <th>Date</th>
+                <th>Semester</th>
+                <th>Amount</th>
+                <th>Mode</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for receipt in fee_receipts %}
+              <tr>
+                <td>{{ receipt.receipt_no }}</td>
+                <td>{{ receipt.payment_date|date:'d M Y' }}</td>
+                <td>Semester {{ receipt.fee_structure.semester }}</td>
+                <td>₹{{ receipt.amount_paid|floatformat:0 }}</td>
+                <td>{{ receipt.payment_mode }}</td>
+                <td><span class="badge green">Paid</span></td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6">No payment receipts available yet.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page-section" id="calendar">
+        <div class="topbar">
+          <div>
+            <h2>Academic Calendar</h2>
+            <p>Real month calendar and academic dates from the database</p>
+          </div>
+          <form method="get" style="display: flex; gap: 8px; align-items: center;">
+            <input type="month" name="month" value="{{ selected_month }}">
+            <button class="btn" type="submit">Load Month</button>
+          </form>
+        </div>
+
+        <div class="section-box">
+          <h3>Upcoming Dates</h3>
+          <p class="sub">Next active academic events and holidays</p>
+          <div class="timeline">
+            {% for event in calendar_upcoming_dates %}
+            <div class="timeline-item">
+              <strong>{{ event.event_date|date:'j M Y' }}</strong>
+              <span>{{ event.title }}{% if event.description %} - {{ event.description }}{% endif %}</span>
+            </div>
+            {% empty %}
+            <div class="timeline-item">
+              <strong>No upcoming date</strong>
+              <span>No academic events are scheduled right now.</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="section-box">
+          <h3>{{ selected_month_label }}</h3>
+          <p class="sub">Real calendar layout for the selected month</p>
+          <div class="calendar-grid calendar-weekdays">
+            {% for weekday in calendar_weekdays %}
+            <div class="calendar-weekday">{{ weekday }}</div>
+            {% endfor %}
+          </div>
+          <div class="calendar-grid">
+            {% for cell in calendar_cells %}
+              {% if cell.is_empty %}
+              <div class="day day-empty"></div>
+              {% else %}
+              <div class="day{% if cell.is_today %} day-today{% endif %}{% if cell.has_event %} day-has-event{% endif %}">{{ cell.day_number }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" id="events">
+        <div class="topbar">
+          <div>
+            <h2>Notices & Events</h2>
+            <p>{{ selected_month_label }} academic updates from the calendar database</p>
+          </div>
+        </div>
+
+        <div class="event-list">
+          {% for event in calendar_month_events %}
+          <div class="event-card">
+            <span class="label {{ event.badge_class }}">{{ event.event_type }}</span>
+            <h4>{{ event.title }}</h4>
+            <p>Date: {{ event.event_date|date:'j F Y' }}</p>
+            {% if event.venue %}<p>Venue: {{ event.venue }}</p>{% endif %}
+            {% if event.description %}<p>{{ event.description }}</p>{% endif %}
+          </div>
+          {% empty %}
+          <div class="event-card">
+            <span class="label blue">Info</span>
+            <h4>No events in {{ selected_month_label }}</h4>
+            <p>No academic event is available for this month.</p>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="section-box" style="margin-top: 18px;">
+          <h3>Assigned Work</h3>
+          <p class="sub">Assignments posted for your course and semester</p>
+          <p id="student-assignment-message" class="sub" style="margin-top: 4px;" data-submit-url="{% url 'students:submit_assignment' %}"></p>
+          <div class="event-list">
+            {% for row in assignment_rows %}
+            <div class="event-card">
+              <span class="label yellow">Assignment</span>
+              <h4>{{ row.assignment.title }}</h4>
+              <p>Due: {{ row.assignment.due_date|date:'j F Y' }}</p>
+              <p>Course: {{ row.assignment.course }}, Semester {{ row.assignment.semester }}</p>
+              {% if row.assignment.description %}<p>{{ row.assignment.description }}</p>{% endif %}
+              <p>
+                Status:
+                {% if row.submission %}
+                  <strong>{{ row.submission.status }}</strong>
+                {% else %}
+                  <strong>Not Submitted</strong>
+                {% endif %}
+              </p>
+              {% if row.submission and row.submission.marks is not None %}
+              <p>Marks: <strong>{{ row.submission.marks }}</strong></p>
+              {% endif %}
+              {% if row.submission and row.submission.feedback %}
+              <p>Feedback: {{ row.submission.feedback }}</p>
+              {% endif %}
+
+              <textarea rows="3" placeholder="Write your answer / submission text" data-assignment-field="submission_text">{% if row.submission %}{{ row.submission.submission_text }}{% endif %}</textarea>
+              <button class="btn" type="button" data-assignment-id="{{ row.assignment.id }}" onclick="submitStudentAssignment(this)">
+                {% if row.submission %}Resubmit{% else %}Submit{% endif %}
+              </button>
+            </div>
+            {% empty %}
+            <div class="event-card">
+              <span class="label blue">Info</span>
+              <h4>No assignments yet</h4>
+              <p>Faculty assignments will show here once published.</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" id="profile">
+        <div class="topbar">
+          <div>
+            <h2>Student Profile</h2>
+            <p>Personal details, academic record, and contact information</p>
+          </div>
+        </div>
+
+        <div class="profile-layout">
+          <div class="profile-panel">
+            <div class="profile-avatar">
+              {% if profile and profile.profile_photo %}
+                <img src="{{ profile.profile_photo.url }}" alt="{{ display_name }} profile photo" class="profile-avatar-image">
+              {% else %}
+                {{ avatar_text }}
+              {% endif %}
+              <form action="{% url 'students:upload_photo' %}" method="post" enctype="multipart/form-data" class="photo-upload-form-inline">
+                {% csrf_token %}
+                <input id="profile-photo-input" type="file" name="profile_photo" accept="image/*" required class="photo-input-hidden" onchange="this.form.submit()">
+                <label for="profile-photo-input" class="photo-edit-button" title="Change profile photo" aria-label="Change profile photo">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M4 20h4l10-10a2 2 0 0 0-4-4L4 16v4z"></path>
+                    <path d="M13.5 6.5l4 4"></path>
+                  </svg>
+                </label>
+              </form>
+            </div>
+            <div class="profile-name">{{ display_name }}</div>
+            <div class="profile-meta">
+              {% if profile %}
+                {{ profile.get_course_display }}
+              {% else %}
+                Student
+              {% endif %}
+            </div>
+
+            <div class="profile-tag-row">
+              <span class="badge green">Active Student</span>
+              <span class="badge blue">
+                {% if profile %}Semester {{ profile.semester }}{% else %}Semester -{% endif %}
+              </span>
+              <span class="badge pink">
+                {% if profile %}Roll {{ profile.roll_no }}{% else %}Roll -{% endif %}
+              </span>
+            </div>
+
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <span>Overall CGPA</span>
+                <strong>{% if profile and profile.overall_gpa is not None %}{{ profile.overall_gpa }}{% else %}-{% endif %}</strong>
+              </div>
+              <div class="profile-stat">
+                <span>Attendance</span>
+                <strong>{{ attendance_overall_percentage }}%</strong>
+              </div>
+              <div class="profile-stat">
+                <span>Advisor</span>
+                <strong>{% if profile and profile.advisor_faculty %}{{ profile.advisor_faculty.user.get_full_name|default:profile.advisor_faculty.faculty_id }}{% else %}Not Assigned{% endif %}</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <h3>Academic & Contact Details</h3>
+            <div class="profile-detail-grid">
+              <div class="profile-detail">
+                <span>Institute</span>
+                <strong>Academy of Technology</strong>
+              </div>
+              <div class="profile-detail">
+                <span>Department</span>
+                <strong>{% if profile %}{{ profile.get_course_display }}{% else %}-{% endif %}</strong>
+              </div>
+              <div class="profile-detail">
+                <span>Semester</span>
+                <strong>{% if profile %}Semester {{ profile.semester }}{% else %}-{% endif %}</strong>
+              </div>
+              <div class="profile-detail">
+                <span>Student ID</span>
+                <strong>{% if profile %}{{ profile.student_id }}{% else %}-{% endif %}</strong>
+              </div>
+              <div class="profile-detail">
+                <span>Email</span>
+                <strong>{{ request.user.email|default:'-' }}</strong>
+              </div>
+              <div class="profile-detail">
+                <span>Phone</span>
+                <strong>{% if profile %}{{ profile.mobile }}{% else %}-{% endif %}</strong>
+              </div>
+              <div class="profile-detail">
+                <span>Parent Contact</span>
+                <strong>{% if profile %}{{ profile.guardian_contact }}{% else %}-{% endif %}</strong>
+              </div>
+              <div class="profile-detail">
+                <span>Gender</span>
+                <strong>{% if profile %}{{ profile.gender }}{% else %}-{% endif %}</strong>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="{% static 'js/student_dashboard.js' %}"></script>
+  </main>
+</body>
+</html>
