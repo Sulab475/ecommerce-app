@@ -1,0 +1,70 @@
+services:
+  # PostgreSQL Database
+  - type: pserv
+    name: bi-dashboard-db
+    env: postgresql
+    plan: free
+    databaseName: bi_dashboard
+    user: postgres
+
+  # Node.js Backend API
+  - type: web
+    name: bi-dashboard-backend
+    env: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node src/app.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_HOST
+        fromDatabase:
+          name: bi-dashboard-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: bi-dashboard-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: bi-dashboard-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: bi-dashboard-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: bi-dashboard-db
+          property: password
+      - key: FRONTEND_URL
+        value: https://bi-dashboard-frontend.onrender.com
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+
+  # React Frontend (Static Site)
+  - type: web
+    name: bi-dashboard-frontend
+    env: static
+    plan: free
+    region: oregon
+    rootDir: frontend
+    buildCommand: node node_modules/vite/bin/vite.js build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://bi-dashboard-backend.onrender.com/api
+      - key: VITE_SOCKET_URL
+        value: https://bi-dashboard-backend.onrender.com

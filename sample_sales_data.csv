@@ -1,0 +1,16 @@
+Order ID,Order Date,Customer Name,Segment,Region,Category,Product,Quantity,Price,Revenue
+ORD-2026-10100,2026-01-15,Enterprise Client A01,Enterprise,North America,Technology,Enterprise Cloud Server v3,2,1500.00,3000.00
+ORD-2026-10101,2026-01-18,SMB Client X12,SMB,Europe,Technology,UltraSharp 4K Monitor,3,450.00,1350.00
+ORD-2026-10102,2026-02-01,Corporate Client C32,Corporate,Asia-Pacific,Furniture,Mesh Ergonomic Task Chair,5,320.00,1520.00
+ORD-2026-10103,2026-02-14,Retail Client B88,Retail,North America,Office Supplies,Premium Dry-Erase Whiteboard,1,180.00,180.00
+ORD-2026-10104,2026-02-22,Enterprise Client Z99,Enterprise,Latin America,Technology,Developer Workstation Pro,1,2500.00,2500.00
+ORD-2026-10105,2026-03-02,SMB Client T15,SMB,Europe,Furniture,Sit-Stand L-Shaped Desk,2,550.00,1100.00
+ORD-2026-10106,2026-03-11,Corporate Client H20,Corporate,Asia-Pacific,Office Supplies,Color Printing Cartridge Set,4,120.00,480.00
+ORD-2026-10107,2026-03-29,Retail Client M45,Retail,North America,Technology,ProBook Laptop 15",1,950.00,950.00
+ORD-2026-10108,2026-04-05,Enterprise Client Y11,Enterprise,Europe,Office Supplies,Premium Dry-Erase Whiteboard,2,220.00,440.00
+ORD-2026-10109,2026-04-19,SMB Client K88,SMB,Latin America,Furniture,Mesh Ergonomic Task Chair,3,350.00,1050.00
+ORD-2026-10110,2026-04-28,Corporate Client W02,Corporate,North America,Technology,Wireless Ergonomic Keyboard,6,110.00,627.00
+ORD-2026-10111,2026-05-02,Retail Client V44,Retail,Europe,Office Supplies,Recycled Paper Carton,10,35.00,350.00
+ORD-2026-10112,2026-05-15,Enterprise Client L55,Enterprise,Asia-Pacific,Technology,Enterprise Cloud Server v3,1,1800.00,1800.00
+ORD-2026-10113,2026-05-22,SMB Client J33,SMB,North America,Furniture,Steel Storage Cabinet,2,250.00,500.00
+ORD-2026-10114,2026-06-01,Corporate Client U09,Corporate,Latin America,Office Supplies,Heavy Duty Stapler & Staples,5,20.00,100.00
