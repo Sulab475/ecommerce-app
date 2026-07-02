@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fix Test</title>
+<style>
+  body { margin: 0; overflow: hidden; background: black; }
+</style>
+</head>
+<body>
+
+    
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+<script>
+// Scene
+const scene = new THREE.Scene();
+
+// Camera
+const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+camera.position.z = 10;
+
+// Renderer
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Light
+const light = new THREE.PointLight(0xffffff, 2);
+light.position.set(10,10,10);
+scene.add(light);
+
+// 🪐 Simple Planet (NO texture)
+const planet = new THREE.Mesh(
+  new THREE.SphereGeometry(2, 32, 32),
+  new THREE.MeshStandardMaterial({ color: 0x00ffcc })
+);
+scene.add(planet);
+
+// Animation
+function animate(){
+  requestAnimationFrame(animate);
+  planet.rotation.y += 0.01;
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+
+</body>
+</html>
