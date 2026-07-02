@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Portfolio | Developer & Designer</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Background Canvas -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Header / Navigation -->
+    <header class="glass-nav">
+        <div class="logo">
+            <span class="neon-text">DEV</span><span class="accent-text">.SYS</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="container hero-content">
+                <p class="greeting">System.out.println("Hello, World!");</p>
+                <h1 class="glitch" data-text="I AM SULAB CHATTERJEE">I AM <span class="neon-text">SULAB
+                        CHATTERJEE</span></h1>
+                <h2 class="tagline">Building the Future with Code & Creativity</h2>
+                <div class="cta-group">
+                    <a href="#projects" class="btn primary-btn">View Projects <span class="arrow">→</span></a>
+                    <a href="#contact" class="btn secondary-btn">Contact Me</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">01. <span class="neon-text">About_Me</span></h2>
+                <div class="about-grid">
+                    <div class="about-text glass-card">
+                        <p>I am Sulab Chatterjee, a full-stack developer and UI/UX designer with a passion for creating
+                            immersive digital experiences. Inspired by sci-fi interfaces and cyberpunk aesthetics, I
+                            blend cutting-edge technology with visionary design.</p>
+                        <p>My goal is to push the boundaries of what's possible on the web, building applications that
+                            are not only highly functional but visually stunning.</p>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-box glass-card">
+                            <h3>3+</h3>
+                            <p>Years Exp</p>
+                        </div>
+                        <div class="stat-box glass-card">
+                            <h3>50+</h3>
+                            <p>Projects</p>
+                        </div>
+                        <div class="stat-box glass-card">
+                            <h3>10+</h3>
+                            <p>Awards</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="container">
+                <h2 class="section-title">02. <span class="neon-text">Projects</span></h2>
+                <div class="project-grid">
+                    <!-- Project 1 -->
+                    <div class="card-container">
+                        <!-- Gravity style accents -->
+                        <div class="accent-dot dot-1"></div>
+                        <div class="accent-dot dot-2"></div>
+                        <div class="accent-line line-1"></div>
+                        
+                        <div class="card">
+                            <div class="card-hero">
+                                <img src="hero-image.png" alt="3D Neural Network Visual" class="hero-image">
+                                <div class="hero-overlay"></div>
+                            </div>
+                            <div class="card-content">
+                                <span class="card-label">WEB AI</span>
+                                <h3 class="card-title">Neural Network Visualizer</h3>
+                                <p class="card-desc">An interactive 3D web application to visualize deep learning models in real-time.</p>
+                                <div class="card-tags">
+                                    <span class="tag">Three.js</span>
+                                    <span class="tag">React</span>
+                                    <span class="tag">Python</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="project-card 3d-card glass-card">
+                        <div class="project-image" style="background-color: #0f3460;">
+                            <div class="overlay">Live Preview</div>
+                        </div>
+                        <div class="project-info">
+                            <span class="project-category">Cyber Security</span>
+                            <h3>Crypto Terminal</h3>
+                            <p>A highly secure encrypted messaging terminal with a hacker-style UI.</p>
+                            <div class="tech-stack">
+                                <span>Node.js</span>
+                                <span>Socket.io</span>
+                                <span>AES-256</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="project-card 3d-card glass-card">
+                        <div class="project-image" style="background-color: #e94560;">
+                            <div class="overlay">Live Preview</div>
+                        </div>
+                        <div class="project-info">
+                            <span class="project-category">Game Dev</span>
+                            <h3>Neon Drifter</h3>
+                            <p>A fast-paced endless runner game set in a cyberpunk metropolis.</p>
+                            <div class="tech-stack">
+                                <span>Unity</span>
+                                <span>C#</span>
+                                <span>HLSL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+            <div class="container">
+                <h2 class="section-title">03. <span class="neon-text">Core_Skills</span></h2>
+                <div class="skills-container">
+                    <div class="skill-category glass-card">
+                        <h3>Frontend</h3>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>React / Vue</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Three.js / WebGL</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>UI/UX Design</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category glass-card">
+                        <h3>Backend & AI</h3>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Node.js / Python</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>SQL / NoSQL</span>
+                                <span>70%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Machine Learning</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="experience-section">
+            <div class="container">
+                <h2 class="section-title">04. <span class="neon-text">Experience</span></h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass-card">
+                            <h3>Senior Frontend Engineer</h3>
+                            <span class="timeline-date">2024 - Present | TechCorp Inc.</span>
+                            <p>Leading the development of highly interactive AI dashboards and data visualization tools.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass-card">
+                            <h3>Full Stack Developer</h3>
+                            <span class="timeline-date">2022 - 2024 | StartupX</span>
+                            <p>Built and scaled real-time collaborative applications using Node.js and React.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass-card">
+                            <h3>Cyberpunk Hackathon Winner</h3>
+                            <span class="timeline-date">2021 | Global Hack</span>
+                            <p>Developed a 3D decentralized application interface that won 1st place in UX design.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">05. <span class="neon-text">Initialize_Contact</span></h2>
+                <div class="contact-content glass-card">
+                    <p class="contact-desc">My inbox is always open. Whether you have a question or just want to say hi,
+                        I'll try my best to get back to you!</p>
+                    <form class="contact-form">
+                        <div class="input-group">
+                            <input type="text" id="name" required>
+                            <label for="name">Name</label>
+                            <div class="input-glow"></div>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="email" required>
+                            <label for="email">Email</label>
+                            <div class="input-glow"></div>
+                        </div>
+                        <div class="input-group">
+                            <textarea id="message" rows="5" required></textarea>
+                            <label for="message">Message</label>
+                            <div class="input-glow"></div>
+                        </div>
+                        <button type="submit" class="btn primary-btn submit-btn">Send Transmission</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI Chatbot UI Mockup -->
+    <div class="chatbot-widget">
+        <div class="chatbot-toggle">
+            <div class="pulse-ring"></div>
+            <span class="ai-icon">AI</span>
+        </div>
+        <div class="chatbot-window glass-card hidden">
+            <div class="chatbot-header">
+                <h3>System Assistant</h3>
+                <span class="status-indicator"></span>
+            </div>
+            <div class="chatbot-messages">
+                <div class="message ai">System initialized. How can I assist you today?</div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" placeholder="Type command...">
+                <button class="send-btn">⮞</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
