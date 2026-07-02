@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nike Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main">
+        <div class="navbar">
+            <div class="icon">
+                <img src="nike-logo-0.png" alt="nike logo">
+                <ul>
+                    <li>HOME</li>
+                    <li>ABOUT US</li>
+                    <li>COLLECTION</li>
+                    <li>CONTACT US</li>
+                </ul>
+            </div>
+
+            <div class="icon_part2">
+                <div class="search_box" id="searchBox">
+                    <input type="text" placeholder="Search shoes..." id="searchInput">
+                    <i class="ri-close-line" id="closeSearch"></i>
+                </div>
+
+                <i class="ri-search-line" id="searchBtn"></i>
+                <i class="ri-shopping-cart-2-line"></i>
+            </div>
+        </div>
+
+        <div id="home" class="content">
+            <div class="content_left">
+                <h5>Explore limited edition</h5>
+                <h1>Nike limited edition</h1>
+                <p>
+                    Unleash the extraordinary. Elevate your game with Nike's Limited Edition.
+                    Where innovation meets style, leaving a lasting mark. Just do it.
+                </p>
+                <button class="btn">Shop Now</button>
+            </div>
+
+            <div class="content_right">
+                <div class="image_container">
+                    <img src="WhatsApp Image 2026-03-19 at 20.17.12.jpeg" alt="shoe">
+                </div>
+            </div>
+        </div>
+
+
+        <div id="about" class="content">
+            <div class="content_left">
+                <div class="image_container">
+                    <img src="nike-logo-0.png" alt="nike logo">
+                </div>
+            </div>
+
+            <div class="content_right">
+                <h1>About Nike</h1>
+                <p>
+                    Nike, Inc. is an American multinational corporation engaged in design,
+                    development, manufacturing and worldwide marketing of footwear,
+                    apparel, and equipment.
+                </p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        const searchBtn = document.getElementById("searchBtn");
+        const closeSearch = document.getElementById("closeSearch");
+        const searchBox = document.getElementById("searchBox");
+        const searchInput = document.getElementById("searchInput");
+
+        searchBtn.addEventListener("click", () => {
+            searchBox.classList.toggle("active");
+
+            if (searchBox.classList.contains("active")) {
+                searchInput.focus();
+            }
+        });
+
+        closeSearch.addEventListener("click", () => {
+            searchBox.classList.remove("active");
+        });
+    </script>
+</body>
+</html>
